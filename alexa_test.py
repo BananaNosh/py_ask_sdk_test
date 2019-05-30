@@ -26,8 +26,10 @@ class AlexaTest:
         Returns:
 
         """
+        if len(test_items) == 0:
+            raise AttributeError("test_items must not be empty")
         session_attributes = {}
-        session_id = "SessionId.{}".format(uuid.uuid4())
+        session_id = test_items[0].request.session_id.format(uuid.uuid4())
         context = LambdaContext()
         for i, item in enumerate(test_items):
             item.request.session.new = i == 0
