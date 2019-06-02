@@ -1,7 +1,12 @@
-from validators.speech_validator import SpeechValidator
-from classes import TestItem, SkillSettings
+import json
 import uuid
+
+from ask_sdk_core.serialize import DefaultSerializer
+from ask_sdk_model import ResponseEnvelope
 from aws_lambda_context import LambdaContext
+
+from classes import SkillSettings
+from validators.speech_validator import SpeechValidator
 
 
 class AlexaTest:
@@ -13,7 +18,7 @@ class AlexaTest:
             skill_settings(SkillSettings): the settings for the skill
         """
         self.handler = handler
-        self.skill_settings = skill_settings
+        self.skill_settings = skill_settings  # TODO check if needed
         self.validators = [SpeechValidator()]
 
     def test(self, test_items, description=""):
@@ -29,23 +34,40 @@ class AlexaTest:
         if len(test_items) == 0:
             raise AttributeError("test_items must not be empty")
         session_attributes = {}
-        session_id = test_items[0].request.session_id.format(uuid.uuid4())
+        session_id = test_items[0].request.session.session_id.format(uuid.uuid4())
         context = LambdaContext()
         for i, item in enumerate(test_items):
             item.request.session.new = i == 0
             item.request.attributes = session_attributes
-            item.request.sessionId = session_id
+            item.request.session.session_id = session_id
 
             # TODO withSessionAttr withUserAccessToken
 
 
             # TODO invokeFunction
-            self.handler(item.request, context)
-
+            # request_dict = item.request.to_dict() TODO: remove
+            # print(request_dict)
+            # request_json = json.dumps(request_dict)
+            # with open("test_events/generated.json", "w+") as f:
+            #     f.write(request_json)
+            # request_json = read("test_events/generated.json", loader=json.loads)
+            # print(request_json)
+            response_dict = self.handler(item.request, context)
+            print(response_dict)
+            response = response_from_dict(response_dict)  # ResponseEnvelope(response_dict["version"], response_dict["sessionAttributes"])
+            if self.skill_settings.debug:
+                print(response)
+            for validator in self.validators:
+                validator.validate(item, response)
 
     # def _run_single_test(self, ):
 
 
-
-
-
+def response_from_dict(response_dict):
+    serializer = DefaultSerializer()
+    response_json = json.dumps(serializer.serialize(response_dict))
+    return serializer.deserialize(response_json, ResponseEnvelope)
+    # params = []
+    # for attr, attr_key in OrderedDict(ResponseEnvelope.attribute_map).items():
+    #     params.append(response_dict[attr_key])
+    # return ResponseEnvelope(*params)

@@ -1,9 +1,10 @@
 import abc
+import unittest
 from classes import TestItem
 from ask_sdk_model import ResponseEnvelope
 
 
-class AbstractResponseValidator(abc.ABC):
+class AbstractResponseValidator(abc.ABC, unittest.TestCase):
     @abc.abstractmethod
     def validate(self, test_item, response):
         """
