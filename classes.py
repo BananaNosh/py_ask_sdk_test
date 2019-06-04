@@ -15,10 +15,10 @@ class TestItem:
         Args:
             request(RequestEnvelope): The request passed to the handler,
             which can be created with an AbstractRequestBuilder
-            expected_speech(str): The speech which should be returned with the response (can be regex),
-            empty string if nothing should be returned
-            expected_repromt(str): The repromt which should be returned with the response (can be regex),
-            empty string if nothing should be returned
+            expected_speech(str|(str, bool)): The speech which should be returned with the response
+            or a tuple(speech, is_regex) or empty string if nothing should be returned
+            expected_repromt(str|(str, bool)): The repromt which should be returned with the response
+            or a tuple(repromt, is_regex) or empty string if nothing should be returned
             should_end_session(bool): The value of should_end_session, the response should contain
             session_attributes(dict): The session_attributes the request should start with
             profile_info(ProfileInfo): The the user's ProfileInfo

@@ -21,15 +21,11 @@ class AlexaTest:
         self.skill_settings = skill_settings  # TODO check if needed
         self.validators = [SpeechValidator()]
 
-    def test(self, test_items, description=""):
+    def test(self, test_items):
         """
         Test the sequence of TestItems against self.validators
         Args:
             test_items(list(TestItem)): the sequence of TestItems
-            description(str): description of the test
-
-        Returns:
-
         """
         if len(test_items) == 0:
             raise AttributeError("test_items must not be empty")
@@ -43,7 +39,6 @@ class AlexaTest:
 
             # TODO withSessionAttr withUserAccessToken
 
-
             # TODO invokeFunction
             # request_dict = item.request.to_dict() TODO: remove
             # print(request_dict)
@@ -53,8 +48,7 @@ class AlexaTest:
             # request_json = read("test_events/generated.json", loader=json.loads)
             # print(request_json)
             response_dict = self.handler(item.request, context)
-            print(response_dict)
-            response = response_from_dict(response_dict)  # ResponseEnvelope(response_dict["version"], response_dict["sessionAttributes"])
+            response = response_from_dict(response_dict)
             if self.skill_settings.debug:
                 print(response)
             for validator in self.validators:
@@ -67,7 +61,3 @@ def response_from_dict(response_dict):
     serializer = DefaultSerializer()
     response_json = json.dumps(serializer.serialize(response_dict))
     return serializer.deserialize(response_json, ResponseEnvelope)
-    # params = []
-    # for attr, attr_key in OrderedDict(ResponseEnvelope.attribute_map).items():
-    #     params.append(response_dict[attr_key])
-    # return ResponseEnvelope(*params)

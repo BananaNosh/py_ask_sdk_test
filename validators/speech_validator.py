@@ -9,7 +9,7 @@ class SpeechValidator(AbstractResponseValidator):
 
     def validate(self, test_item, response):
         if not response.response:
-            self.fail("No response given")
+            assert False, "No response given"
         if response.response.output_speech:
             expected_speech = test_item.expected_speech
             self._assert_output_speech(response.response.output_speech, expected_speech,
@@ -20,7 +20,12 @@ class SpeechValidator(AbstractResponseValidator):
             self._assert_output_speech(response.response.reprompt.output_speech, expected_repromt,
                                        "Not the expected repromt output")
 
-    def _assert_output_speech(self, output_speech, expected_speech, msg):
+    @staticmethod
+    def _assert_output_speech(output_speech, expected_speech, msg):
+        is_regex = False
+        if type(expected_speech) is tuple:
+            expected_speech = expected_speech[0]
+            is_regex = expected_speech[1]
         speech_type = output_speech.object_type
         actual_speech = None
         if speech_type == 'SSML':
@@ -29,7 +34,9 @@ class SpeechValidator(AbstractResponseValidator):
             actual_speech = output_speech.text
         if expected_speech is not None:
             if len(expected_speech) == 0:
-                self.assertIsNone(actual_speech)
+                assert actual_speech is None
+            elif is_regex:
+                match = re.fullmatch(expected_speech, actual_speech)
+                assert match is not None, msg + ": {} instead of {}".format(actual_speech, expected_speech)
             else:
-                match = re.match(expected_speech, actual_speech)
-                self.assertIsNotNone(match, msg + ": {} instead of {}".format(actual_speech, expected_speech))
+                assert expected_speech == actual_speech
