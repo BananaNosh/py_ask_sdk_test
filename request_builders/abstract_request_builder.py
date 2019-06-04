@@ -1,12 +1,20 @@
 import abc
-from ask_sdk_model import RequestEnvelope, Request, Session, Application, User, Context, Device, SupportedInterfaces
-from ask_sdk_model.interfaces.system import SystemState
-from ask_sdk_model.interfaces.audioplayer import AudioPlayerState, PlayerActivity
 import uuid
+
+from ask_sdk_model import RequestEnvelope, Session, Application, User, Context, Device
+from ask_sdk_model.interfaces.audioplayer import AudioPlayerState, PlayerActivity
+from ask_sdk_model.interfaces.system import SystemState
+
+from classes import SkillSettings
 
 
 class AbstractRequestBuilder(abc.ABC):
     def __init__(self, skill_settings):
+        """
+        RequestBuilder
+        Args:
+            skill_settings(SkillSettings):  The settings of the tested Skill
+        """
         self.skill_settings = skill_settings
         self.user = User(self.skill_settings.user_id)
         self.application = Application(self.skill_settings.app_id)
