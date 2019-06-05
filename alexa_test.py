@@ -7,6 +7,11 @@ from aws_lambda_context import LambdaContext
 
 from classes import SkillSettings
 from validators.speech_validator import SpeechValidator
+from validators.question_mark_validator import QuestionMarkValidator
+from validators.session_attribute_validator import SessionAttributeValidator
+from validators.end_session_validator import EndSessionValidator
+from validators.dialog_validator import DialogValidator
+from validators.card_validator import CardValidator
 
 
 class AlexaTest:
@@ -19,7 +24,14 @@ class AlexaTest:
         """
         self.handler = handler
         self.skill_settings = skill_settings  # TODO check if needed
-        self.validators = [SpeechValidator()]
+        self.validators = [
+            SpeechValidator(),
+            SessionAttributeValidator(),
+            EndSessionValidator(),
+            QuestionMarkValidator(),
+            DialogValidator(),
+            CardValidator()
+        ]
 
     def test(self, test_items):
         """

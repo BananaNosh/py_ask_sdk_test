@@ -4,10 +4,17 @@ import re
 
 class SpeechValidator(AbstractResponseValidator):
     """
-    Validator against expected speech
+    Validator against expected speech and repromt
     """
 
     def validate(self, test_item, response):
+        """
+        Validates the given response for the given test_item against expected speech and repromt
+        Args:
+            test_item(TestItem): The TestItem the response was given for
+            response(ResponseEnvelope): The response
+        Returns: True if the validation was successful otherwise should throw assertion
+        """
         if not response.response:
             assert False, "No response given"
         if response.response.output_speech:
@@ -19,13 +26,14 @@ class SpeechValidator(AbstractResponseValidator):
             expected_repromt = test_item.expected_repromt
             self._assert_output_speech(response.response.reprompt.output_speech, expected_repromt,
                                        "Not the expected repromt output")
+        return True
 
     @staticmethod
     def _assert_output_speech(output_speech, expected_speech, msg):
         is_regex = False
         if type(expected_speech) is tuple:
-            expected_speech = expected_speech[0]
             is_regex = expected_speech[1]
+            expected_speech = expected_speech[0]
         speech_type = output_speech.object_type
         actual_speech = None
         if speech_type == 'SSML':

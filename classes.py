@@ -6,9 +6,12 @@ from ask_sdk_model.interfaces.videoapp import VideoItem
 class TestItem:
     def __init__(self, request, expected_speech=None, expected_repromt=None, should_end_session=None,
                  session_attributes=None, profile_info=None, user_access_token=None,
-                 check_question=True, expected_slot_to_elicit=None, expected_intent_for_elicitation=None,
-                 should_confirm_slot=None, expected_attributes=None, expected_card_title=None, expected_card_text=None,
-                 expected_image_url=None, expected_play_stream=None, should_stop_stream=None,
+                 check_question=True,
+                 expected_slot_to_elicit=None, expected_intent_for_elicitation=None, expected_slot_to_confirm=None,
+                 should_confirm_intent=None,
+                 expected_attributes=None,
+                 expected_card_title=None, expected_card_text=None, expected_card_content=None, expected_image_url=None,
+                 expected_play_stream=None, should_stop_stream=None,
                  expected_clear_stream_behaviour=None, expected_video_item=None):
         """
 
@@ -25,12 +28,15 @@ class TestItem:
             user_access_token(str): the user's access_token
             check_question(bool): If it should be checked, that (speech ends with question mark) != should_end_session
             expected_slot_to_elicit(str): The name of the slot which should be elicit by the response
-            expected_intent_for_elicitation: The name of the intent, whose slot should be elicit by the response
-            should_confirm_slot(bool): TODO bool or string
+            expected_intent_for_elicitation(str): The name of the intent, whose slot should be elicit by the response
+            expected_slot_to_confirm(str): The name of the slot which should be confirmed by the response
+            should_confirm_intent(bool): If the intent should be confirmed by the response
             expected_attributes(dict): The attributes which should be returned with the response
             expected_card_title(str): The title of the card which should be returned with the response
-            expected_card_text(str): The text of the card, that should be a SimpleCard,
-            which should be returned with the response
+            expected_card_text(str|(str, bool)): The text of the card, that should be a StandardCard,
+            which should be returned with the response or a tuple(card_text, is_regex)
+            expected_card_content(str|(str, bool)): The content of the card, that should be a SimpleCard
+            which should be returned with the response or a tuple(card_content, is_regex)
             expected_image_url(str): The expected image url, which should be returned with a StandardCard
             expected_play_stream(PlayStreamConfig): The expected configuration to be returned with the response
             should_stop_stream(bool): If the stream should be stopped
@@ -47,10 +53,12 @@ class TestItem:
         self.check_question = check_question
         self.expected_slot_to_elicit = expected_slot_to_elicit
         self.expected_intent_for_elicitation = expected_intent_for_elicitation
-        self.should_confirm_slot = should_confirm_slot
+        self.expected_slot_to_confirm = expected_slot_to_confirm
+        self.should_confirm_intent = should_confirm_intent
         self.expected_attributes = expected_attributes
         self.expected_card_title = expected_card_title
         self.expected_card_text = expected_card_text
+        self.expected_card_content = expected_card_content
         self.expected_image_url = expected_image_url
         self.expected_play_stream = expected_play_stream
         self.should_stop_stream = should_stop_stream
