@@ -12,6 +12,8 @@ from validators.session_attribute_validator import SessionAttributeValidator
 from validators.end_session_validator import EndSessionValidator
 from validators.dialog_validator import DialogValidator
 from validators.card_validator import CardValidator
+from validators.audio_player_validator import AudioPlayerValidator
+from validators.video_app_validator import VideoAppValidator
 
 
 class AlexaTest:
@@ -30,7 +32,9 @@ class AlexaTest:
             EndSessionValidator(),
             QuestionMarkValidator(),
             DialogValidator(),
-            CardValidator()
+            CardValidator(),
+            AudioPlayerValidator(),
+            VideoAppValidator()
         ]
 
     def test(self, test_items):
