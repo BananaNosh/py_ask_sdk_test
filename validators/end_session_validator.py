@@ -14,5 +14,6 @@ class EndSessionValidator(AbstractResponseValidator):
             response(ResponseEnvelope): The response
         Returns: True if the validation was successful otherwise should throw assertion
         """
-        assert test_item.should_end_session == response.response.should_end_session
+        assert test_item.should_end_session is None \
+               or test_item.should_end_session == response.response.should_end_session
         return True
