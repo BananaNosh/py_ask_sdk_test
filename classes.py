@@ -10,7 +10,8 @@ class TestItem:
                  expected_slot_to_elicit=None, expected_intent_for_elicitation=None, expected_slot_to_confirm=None,
                  should_confirm_intent=None,
                  expected_attributes=None,
-                 expected_card_title=None, expected_card_text=None, expected_card_content=None, expected_image_url=None,
+                 expected_card_title=None, expected_card_text=None, expected_card_content=None,
+                 expected_small_image_url=None, expected_large_image_url=None,
                  expected_play_stream=None, should_stop_stream=None,
                  expected_clear_stream_behaviour=None, expected_video_item=None):
         """
@@ -37,7 +38,8 @@ class TestItem:
             which should be returned with the response or a tuple(card_text, is_regex)
             expected_card_content(str|(str, bool)): The content of the card, that should be a SimpleCard
             which should be returned with the response or a tuple(card_content, is_regex)
-            expected_image_url(str): The expected image url, which should be returned with a StandardCard
+            expected_small_image_url(str): The expected small image url, which should be returned with a StandardCard
+            expected_large_image_url(str): The expected large image url, which should be returned with a StandardCard
             expected_play_stream(PlayStreamConfig): The expected configuration to be returned with the response
             should_stop_stream(bool): If the stream should be stopped
             expected_clear_stream_behaviour(ClearBehavior): The expected clear behavior for the audio_player stream
@@ -59,7 +61,8 @@ class TestItem:
         self.expected_card_title = expected_card_title
         self.expected_card_text = expected_card_text
         self.expected_card_content = expected_card_content
-        self.expected_image_url = expected_image_url
+        self.expected_small_image_url = expected_small_image_url
+        self.expected_large_image_url = expected_large_image_url
         self.expected_play_stream = expected_play_stream
         self.should_stop_stream = should_stop_stream
         self.expected_clear_stream_behaviour = expected_clear_stream_behaviour
