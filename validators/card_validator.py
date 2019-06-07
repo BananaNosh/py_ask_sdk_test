@@ -19,7 +19,7 @@ class CardValidator(AbstractResponseValidator):
         Returns: True if the validation was successful otherwise should throw assertion
         """
         if not test_item.expected_card_text and not test_item.expected_card_title \
-                and not test_item.expected_card_content and not test_item.expected_image_url:
+                and not test_item.expected_card_content and not test_item.expected_small_image_url:
             return True
         card = response.response.card
         assert card is not None
@@ -38,11 +38,14 @@ class CardValidator(AbstractResponseValidator):
             card_content = card.content
             expected_card_content = test_item.expected_card_content
             self.assert_text_with_regex(card_content, expected_card_content, msg)
-        if test_item.expected_image_url:
+        if test_item.expected_small_image_url is not None:
             assert type(card) is StandardCard
             assert card.image
-            assert test_item.expected_image_url == card.image.small_image_url \
-                   or test_item.expected_image_url == card.image.large_image_url
+            assert test_item.expected_small_image_url == card.image.small_image_url
+        if test_item.expected_large_image_url is not None:
+            assert type(card) is StandardCard
+            assert card.image
+            assert test_item.expected_large_image_url == card.image.large_image_url
         return True
 
     @staticmethod

@@ -7,7 +7,7 @@ from pseudo_handler import handler, speechs
 import pytest
 
 
-def test_speech_validator():
+def test_speech_validator_wrong_speech():
     alexa_test = AlexaTest(handler, skill_settings)
     with pytest.raises(AssertionError):
         alexa_test.test(
@@ -20,6 +20,10 @@ def test_speech_validator():
                 )
             ]
         )
+
+
+def test_speech_validator_wrong_reprompt():
+    alexa_test = AlexaTest(handler, skill_settings)
     with pytest.raises(AssertionError):
         alexa_test.test(
             [
@@ -31,6 +35,10 @@ def test_speech_validator():
                 )
             ]
         )
+
+
+def test_speech_validator_no_repromt():
+    alexa_test = AlexaTest(handler, skill_settings)
     with pytest.raises(AssertionError):
         alexa_test.test(
             [
@@ -42,6 +50,10 @@ def test_speech_validator():
                 )
             ]
         )
+
+
+def test_speech_validator_correct():
+    alexa_test = AlexaTest(handler, skill_settings)
     alexa_test.test(
         [
             TestItem(
@@ -52,6 +64,10 @@ def test_speech_validator():
             )
         ]
     )
+
+
+def test_speech_validator_no_speech():
+    alexa_test = AlexaTest(handler, skill_settings)
     alexa_test.test(
         [
             TestItem(
@@ -62,6 +78,21 @@ def test_speech_validator():
             )
         ]
     )
+    with pytest.raises(AssertionError):
+        alexa_test.test(
+            [
+                TestItem(
+                    IntentRequestBuilder("TaceIntent", skill_settings).build(),
+                    expected_speech="Heus",
+                    expected_repromt="",
+                    check_question=False
+                )
+            ]
+        )
+
+
+def test_speech_validator_regex_matched():
+    alexa_test = AlexaTest(handler, skill_settings)
     alexa_test.test(
         [
             TestItem(
@@ -72,6 +103,10 @@ def test_speech_validator():
             )
         ]
     )
+
+
+def test_speech_validator_regex_no_match():
+    alexa_test = AlexaTest(handler, skill_settings)
     with pytest.raises(AssertionError):
         alexa_test.test(
             [
@@ -83,3 +118,17 @@ def test_speech_validator():
                 )
             ]
         )
+
+
+def test_speech_validator_plain_text():
+    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test.test(
+        [
+            TestItem(
+                IntentRequestBuilder("DeiIntent", skill_settings).build(),
+                expected_speech=(r"Jupiter.+", True),
+                expected_repromt="",
+                check_question=False
+            )
+        ]
+    )

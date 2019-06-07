@@ -63,7 +63,8 @@ class AlexaTest:
             #     f.write(request_json)
             # request_json = read("test_events/generated.json", loader=json.loads)
             # print(request_json)
-            response_dict = self.handler(item.request, context)
+            # request_json = request_to_json(item.request)
+            response_dict = self.handler(request_to_dict(item.request), context)
             response = response_from_dict(response_dict)
             if self.skill_settings.debug:
                 print(response)
@@ -71,6 +72,10 @@ class AlexaTest:
                 validator.validate(item, response)
 
     # def _run_single_test(self, ):
+
+
+def request_to_dict(request):
+    return DefaultSerializer().serialize(request)
 
 
 def response_from_dict(response_dict):

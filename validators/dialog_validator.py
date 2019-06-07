@@ -16,7 +16,7 @@ class DialogValidator(AbstractResponseValidator):
         Returns: True if the validation was successful otherwise should throw assertion
         """
         if not test_item.expected_slot_to_elicit and not test_item.expected_intent_for_elicitation \
-                and not test_item.expected_slot_to_confirm and not test_item.should_confirm_intent:
+                and not test_item.expected_slot_to_confirm and test_item.should_confirm_intent is None:
             return True
         assert response.response.directives
         directives_for_type = {}
@@ -28,12 +28,12 @@ class DialogValidator(AbstractResponseValidator):
             if test_item.expected_slot_to_elicit:
                 assert test_item.expected_slot_to_elicit == elicit_slot_directive.slot_to_elicit
             if test_item.expected_intent_for_elicitation:
-                assert elicit_slot_directive.updatedIntent is not None
-                assert test_item.expected_intent_for_elicitation == elicit_slot_directive.updatedIntent.name
+                assert elicit_slot_directive.updated_intent is not None
+                assert test_item.expected_intent_for_elicitation == elicit_slot_directive.updated_intent.name
         if test_item.expected_slot_to_confirm:
             assert ConfirmSlotDirective in directives_for_type
             confirm_slot_directive = directives_for_type[ConfirmSlotDirective]
             assert test_item.expected_slot_to_confirm == confirm_slot_directive.slot_to_confirm
-        if test_item.should_confirm_intent:
-            assert ConfirmIntentDirective in directives_for_type
+        if test_item.should_confirm_intent is not None:
+            assert test_item.should_confirm_intent == (ConfirmIntentDirective in directives_for_type)
         return True

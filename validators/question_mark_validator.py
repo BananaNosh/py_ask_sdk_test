@@ -17,13 +17,17 @@ class QuestionMarkValidator(AbstractResponseValidator):
         if not test_item.check_question:
             return True
         output_speech = response.response.output_speech
-        speech_type = output_speech.object_type
-        actual_speech = ""
-        if speech_type == 'SSML':
-            actual_speech = output_speech.ssml[7:-8]
-        elif speech_type == 'PlainText':
-            actual_speech = output_speech.text
-        question_marks = ["?", "\u055E", "\u061F", "\u2E2E", "\uFF1F"]
-        ends_with_question_mark = sum([q in actual_speech for q in question_marks]) > 0
+        if output_speech is None:
+            contains_question_mark = False
+        else:
+            speech_type = output_speech.object_type
+            actual_speech = ""
+            if speech_type == 'SSML':
+                actual_speech = output_speech.ssml[7:-8]
+            elif speech_type == 'PlainText':
+                actual_speech = output_speech.text
+            question_marks = ["?", "\u055E", "\u061F", "\u2E2E", "\uFF1F"]
+            contains_question_mark = sum([q in actual_speech for q in question_marks]) > 0
         should_end_session = response.response.should_end_session
-        assert should_end_session != ends_with_question_mark
+        should_end_session = True if should_end_session is None else should_end_session
+        assert should_end_session != contains_question_mark

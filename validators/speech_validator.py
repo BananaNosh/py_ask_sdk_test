@@ -36,8 +36,7 @@ class SpeechValidator(AbstractResponseValidator):
         if type(expected_speech) is tuple:
             is_regex = expected_speech[1]
             expected_speech = expected_speech[0]
-        if expected_speech is None:
-            return
+            assert expected_speech is not None
         if output_speech is None:
             assert len(expected_speech) == 0, msg
             return
