@@ -5,6 +5,7 @@ from classes import TestItem
 from pseudo_handler import handler
 from request_builders.intent_request_builder import IntentRequestBuilder
 from request_builders.launch_request_builder import LaunchRequestBuilder
+from request_builders.session_ended_request_builder import SessionEndedRequestBuilder, SessionEndedReason
 from test_config import skill_settings
 
 
@@ -46,6 +47,14 @@ def test_end_session_validator_correct():
         [
             TestItem(
                 IntentRequestBuilder("DeiIntent", skill_settings).build(),
+                should_end_session=True
+            )
+        ]
+    )
+    alexa_test.test(
+        [
+            TestItem(
+                SessionEndedRequestBuilder(SessionEndedReason.USER_INITIATED, skill_settings).build(),
                 should_end_session=True
             )
         ]

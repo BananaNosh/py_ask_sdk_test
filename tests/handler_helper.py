@@ -1,5 +1,4 @@
 import logging
-from typing import Union
 
 from ask_sdk_core.handler_input import HandlerInput
 
@@ -7,12 +6,12 @@ from ask_sdk_core.handler_input import HandlerInput
 # TODO docstrings
 def get_slot_resolutions_from_handler(handler_input, slot_name):
     """
-    Resolve the slot name from the request using resolutions.
+    Get the resolutions for the slot from the handler_input.
     Args:
         handler_input(HandlerInput): the handler input
-        slot_name(str): the slot name
+        slot_name(str): the slot's name
 
-    Returns: (list(Resolution)) the found resolutions
+    Returns: (list(Resolution)|None) the found resolutions or None
     """
     request = handler_input.request_envelope.request
     try:
@@ -26,7 +25,14 @@ def get_slot_resolutions_from_handler(handler_input, slot_name):
 
 
 def get_most_probable_value_for_slot(handler_input, slot_name):
-    # type: (HandlerInput, str) -> Union[str, None]
+    """
+    Get the value for the slot, if necessary, by taking the value from the most probable resolution
+    Args:
+        handler_input(HandlerInput): the handler input
+        slot_name(str): the slot's name
+
+    Returns: (str|None) The value for the slot or None if no value given
+    """
     request = handler_input.request_envelope.request
     try:
         slot_values = get_slot_resolutions_from_handler(handler_input, slot_name)

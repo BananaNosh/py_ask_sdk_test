@@ -8,6 +8,9 @@ from ask_sdk_model import Response
 from ask_sdk_model.dialog import ElicitSlotDirective, ConfirmIntentDirective, ConfirmSlotDirective
 from ask_sdk_model.ui import SimpleCard, StandardCard, Image
 from ask_sdk_model.ui.plain_text_output_speech import PlainTextOutputSpeech
+from ask_sdk_model.interfaces.audioplayer import PlayDirective, PlayBehavior, AudioItem, Stream, AudioItemMetadata
+from ask_sdk_model.interfaces.audioplayer import StopDirective, ClearQueueDirective, ClearBehavior
+from ask_sdk_model.interfaces.videoapp import LaunchDirective, VideoItem, Metadata
 
 from handler_helper import get_most_probable_value_for_slot
 
@@ -15,7 +18,6 @@ sb = SkillBuilder()
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-
 
 speechs = {
     "launch": "Salve, gaudeo te videre!",
@@ -35,6 +37,7 @@ images = {
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
+
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
         return is_request_type("LaunchRequest")(handler_input)
@@ -53,7 +56,8 @@ class TaceIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        handler_input.response_builder.speak(None).ask(reprompt=None)
+        handler_input.response_builder.speak(None).ask(reprompt=None) \
+            .add_directive(ClearQueueDirective(ClearBehavior.CLEAR_ALL))
         return handler_input.response_builder.response
 
 
@@ -76,9 +80,9 @@ class CatullIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        handler_input.response_builder\
-            .speak(speechs["catull"])\
-            .ask(speechs["catull_repromt"])\
+        handler_input.response_builder \
+            .speak(speechs["catull"]) \
+            .ask(speechs["catull_repromt"]) \
             .set_card(SimpleCard("Catull", speechs["catull_card"]))
         return handler_input.response_builder.response
 
@@ -90,8 +94,8 @@ class NeroIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        handler_input.response_builder.speak(speechs["nero"])\
-            .add_directive(ConfirmIntentDirective())\
+        handler_input.response_builder.speak(speechs["nero"]) \
+            .add_directive(ConfirmIntentDirective()) \
             .set_card(StandardCard("Nero", speechs["nero_card"],
                                    Image(images["nero"], images["nero"])))
         return handler_input.response_builder.response
@@ -109,7 +113,7 @@ class VarusIntentHandler(AbstractRequestHandler):
             return handler_input.response_builder.add_directive(ElicitSlotDirective(slot_to_elicit="legiones")).response
         slot_value = get_most_probable_value_for_slot(handler_input, "ballistae")
         if slot_value is None:
-            return handler_input.response_builder.add_directive(ElicitSlotDirective(slot_to_elicit="ballistae"))\
+            return handler_input.response_builder.add_directive(ElicitSlotDirective(slot_to_elicit="ballistae")) \
                 .response
         slot_value = get_most_probable_value_for_slot(handler_input, "legati")
         if slot_value is None:
@@ -121,16 +125,74 @@ class VarusIntentHandler(AbstractRequestHandler):
         return handler_input.response_builder.add_directive(ElicitSlotDirective(updated_intent)).response
 
 
+class OrpheusIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("OrpheusIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        pellicula_slot = get_most_probable_value_for_slot(handler_input, "pellicula")
+        if pellicula_slot is None:
+            handler_input.response_builder.add_directive(
+                PlayDirective(PlayBehavior.REPLACE_ALL,
+                              AudioItem(Stream(token="cantare_token", url="https://"),
+                                        AudioItemMetadata("Highway to hell"))))
+        else:
+            handler_input.response_builder \
+                .add_directive(LaunchDirective(VideoItem("https://", Metadata("Orpheus et Eurydike"))))
+        return handler_input.response_builder.response
+
+
+class ResumeIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("AMAZON.ResumeIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        handler_input.response_builder.add_directive(
+            PlayDirective(PlayBehavior.REPLACE_ALL,
+                          AudioItem(Stream(token="lyra_token", url="https://"), AudioItemMetadata("Highway to hell"))))
+        return handler_input.response_builder.response
+
+
+class PauseIntentHandler(AbstractRequestHandler):
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_intent_name("AMAZON.PauseIntent")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        handler_input.response_builder.add_directive(StopDirective())
+        return handler_input.response_builder.response
+
+
+class SessionEndedRequestHandler(AbstractRequestHandler):  # TODO docstrings
+    """Handler for skill session end."""
+
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return is_request_type("SessionEndedRequest")(handler_input)
+
+    def handle(self, handler_input):
+        # type: (HandlerInput) -> Response
+        return handler_input.response_builder.response
+
+
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(TaceIntentHandler())
 sb.add_request_handler(DeiIntentHandler())
 sb.add_request_handler(CatullIntentHandler())
 sb.add_request_handler(NeroIntentHandler())
 sb.add_request_handler(VarusIntentHandler())
+sb.add_request_handler(OrpheusIntentHandler())
+sb.add_request_handler(ResumeIntentHandler())
+sb.add_request_handler(PauseIntentHandler())
 # sb.add_request_handler(HelpIntentHandler())
 # sb.add_request_handler(CancelOrStopIntentHandler())
 # sb.add_request_handler(FallbackIntentHandler())
-# sb.add_request_handler(SessionEndedRequestHandler())
+sb.add_request_handler(SessionEndedRequestHandler())
 
 # sb.add_exception_handler(CatchAllExceptionHandler())
 

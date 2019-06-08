@@ -7,7 +7,7 @@ from request_builders.intent_request_builder import IntentRequestBuilder
 from test_config import skill_settings
 
 
-def test_test_card_validator():
+def test_card_validator():
     alexa_test = AlexaTest(handler, skill_settings)
     alexa_test.test(
         [

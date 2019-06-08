@@ -26,6 +26,6 @@ class VideoAppValidator(AbstractResponseValidator):
         launch_directive = directives_for_type[LaunchDirective]
         expected_video_item = test_item.expected_video_item
         video_item = launch_directive.video_item
-        assert video_item.source.url.startswith("https://"), "The stream url is not https"
+        assert video_item.source.startswith("https://"), "The stream url is not https"
         assert expected_video_item == video_item
         return True

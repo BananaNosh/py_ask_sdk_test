@@ -17,7 +17,8 @@ class AudioPlayerValidator(AbstractResponseValidator):
         Returns: True if the validation was successful otherwise should throw assertion
         """
         expected_play_config = test_item.expected_play_stream
-        if not expected_play_config and not test_item.should_stop_stream and not test_item.expected_clear_stream_behaviour:
+        if not expected_play_config and test_item.should_stop_stream is None \
+                and not test_item.expected_clear_stream_behaviour:
             return True
         assert response.response.directives
         directives_for_type = {}
@@ -31,8 +32,8 @@ class AudioPlayerValidator(AbstractResponseValidator):
             if expected_play_config.stream:
                 assert expected_play_config.stream == stream
             assert play_directive.play_behavior == expected_play_config.behavior
-        if test_item.should_stop_stream:
-            assert StopDirective in directives_for_type
+        if test_item.should_stop_stream is not None:
+            assert test_item.should_stop_stream == (StopDirective in directives_for_type)
         if test_item.expected_clear_stream_behaviour:
             assert ClearQueueDirective in directives_for_type
             clear_queue_directive = directives_for_type[ClearQueueDirective]
