@@ -19,7 +19,7 @@ from validators.video_app_validator import VideoAppValidator
 
 
 class AlexaTest:
-    def __init__(self, handler, skill_settings):
+    def __init__(self, handler, debug=False):
         """
         Class for testing an alexa handler
         Args:
@@ -27,7 +27,7 @@ class AlexaTest:
             skill_settings(SkillSettings): the settings for the skill
         """
         self.handler = handler
-        self.skill_settings = skill_settings  # TODO check if needed
+        self.debug = debug
         self.validators = [
             SpeechValidator(),
             SessionAttributeValidator(),
@@ -78,7 +78,7 @@ class AlexaTest:
             # request_json = request_to_json(item.request)
             response_dict = handler(request_to_dict(item.request), context)
             response = response_from_dict(response_dict)
-            if self.skill_settings.debug:
+            if self.debug:
                 print(response)
             for validator in self.validators:
                 validator.validate(item, response)

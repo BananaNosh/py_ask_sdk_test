@@ -79,7 +79,6 @@ class DeiIntentHandler(AbstractRequestHandler):
         # noinspection PyUnresolvedReferences
         name_response = requests.get("{}v2/accounts/~current/settings/Profile.name"
                                      .format(handler_input.context.system.api_endpoint))
-        print(name_response.status_code)
         name = None
         if name_response.status_code == 200:
             name = name_response.json()

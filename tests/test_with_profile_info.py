@@ -7,7 +7,7 @@ import pytest
 
 
 def test_with_profile_info():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(IntentRequestBuilder("DeiIntent", skill_settings).build(),
                  profile_info=ProfileInfo("Apollo", "Paian", "apollo@olympus.org", "003023520"),
@@ -25,7 +25,7 @@ def test_with_profile_info():
 
 
 def test_other_http_request():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(IntentRequestBuilder("DeiIntent", skill_settings).build(),
                  profile_info=ProfileInfo("Apollo", "Paian", "apollo@olympus.org", "003023520"),

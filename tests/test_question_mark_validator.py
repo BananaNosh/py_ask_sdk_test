@@ -9,7 +9,7 @@ from test_config import skill_settings
 
 
 def test_question_mark_validator_wrong():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     with pytest.raises(AssertionError):
         alexa_test.test(
             [
@@ -33,7 +33,7 @@ def test_question_mark_validator_wrong():
 
 
 def test_end_session_validator_correct():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
             TestItem(

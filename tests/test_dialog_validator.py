@@ -9,7 +9,7 @@ from test_config import skill_settings
 
 
 def test_dialog_validator_elicit_slot():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
             TestItem(
@@ -76,7 +76,7 @@ def test_dialog_validator_elicit_slot():
 
 
 def test_dialog_validator_elicit_intent():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(
             IntentRequestBuilder("VarusIntent", skill_settings)
@@ -99,7 +99,7 @@ def test_dialog_validator_elicit_intent():
 
 
 def test_dialog_validator_confirm_slot():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(
             IntentRequestBuilder("VarusIntent", skill_settings)
@@ -132,7 +132,7 @@ def test_dialog_validator_confirm_slot():
 
 
 def test_dialog_validator_confirm_intent():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(
             IntentRequestBuilder("VarusIntent", skill_settings)

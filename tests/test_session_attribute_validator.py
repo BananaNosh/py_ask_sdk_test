@@ -8,7 +8,7 @@ from test_config import skill_settings
 
 
 def test_session_attribute_validator():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
             TestItem(

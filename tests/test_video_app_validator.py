@@ -8,7 +8,7 @@ import pytest
 
 
 def test_video_app_validator():
-    alexa_test = AlexaTest(handler, skill_settings)
+    alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(IntentRequestBuilder("OrpheusIntent", skill_settings)
                  .with_slot("pellicula", True).build(),
