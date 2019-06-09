@@ -1,6 +1,7 @@
 from ask_sdk_model import RequestEnvelope
 from ask_sdk_model.interfaces.audioplayer import PlayBehavior, Stream, ClearBehavior
 from ask_sdk_model.interfaces.videoapp import VideoItem
+from ask_sdk_model import SupportedInterfaces
 
 
 class TestItem:
@@ -70,7 +71,8 @@ class TestItem:
 
 
 class SkillSettings:
-    def __init__(self, app_id, user_id, device_id, locale, api_endpoint="https://api.amazonalexa.com/", debug=False):
+    def __init__(self, app_id, user_id, device_id, locale, interfaces,
+                 api_endpoint="https://api.amazonalexa.com/", debug=False):
         """
         Object to store skill settings
         Args:
@@ -79,12 +81,14 @@ class SkillSettings:
             device_id(str): the device id to simulate
             locale(str): the locale
             api_endpoint(str): the api endpoint
+            interfaces(SupportedInterfaces): the supported interfaces
             debug(bool): if in debug mode TODO
         """
         self.app_id = app_id
         self.user_id = user_id
         self.device_id = device_id
         self.locale = locale
+        self.supported_interfaces = interfaces
         self.api_endpoint = api_endpoint
         self.debug = debug
 
