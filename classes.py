@@ -70,7 +70,7 @@ class TestItem:
 
 
 class SkillSettings:
-    def __init__(self, app_id, user_id, device_id, locale, debug=False):
+    def __init__(self, app_id, user_id, device_id, locale, api_endpoint="https://api.amazonalexa.com/", debug=False):
         """
         Object to store skill settings
         Args:
@@ -78,12 +78,14 @@ class SkillSettings:
             user_id(str): the user id to simulate
             device_id(str): the device id to simulate
             locale(str): the locale
+            api_endpoint(str): the api endpoint
             debug(bool): if in debug mode TODO
         """
         self.app_id = app_id
         self.user_id = user_id
         self.device_id = device_id
         self.locale = locale
+        self.api_endpoint = api_endpoint
         self.debug = debug
 
 

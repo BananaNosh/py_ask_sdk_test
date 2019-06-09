@@ -48,7 +48,7 @@ class AbstractRequestBuilder(abc.ABC):
         """
         context = Context(SystemState(application=self.application, user=self.user,
                                       device=Device(self.skill_settings.device_id),
-                                      api_endpoint="'https://api.amazonalexa.com/'",
+                                      api_endpoint=self.skill_settings.api_endpoint,
                                       api_access_token=str(uuid.uuid4())),
                           AudioPlayerState(player_activity=PlayerActivity.IDLE))
         # TODO add interfaces

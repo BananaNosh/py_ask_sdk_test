@@ -52,4 +52,4 @@ class SpeechValidator(AbstractResponseValidator):
             match = re.fullmatch(expected_speech, actual_speech)
             assert match is not None, msg + ": {} instead of {}".format(actual_speech, expected_speech)
         else:
-            assert expected_speech == actual_speech
+            assert expected_speech == actual_speech, msg + ": '{}' instead of '{}'".format(actual_speech, expected_speech)

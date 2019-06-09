@@ -1,16 +1,17 @@
 import logging
 
+import requests
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.utils import is_request_type, is_intent_name
 from ask_sdk_model import Response
 from ask_sdk_model.dialog import ElicitSlotDirective, ConfirmIntentDirective, ConfirmSlotDirective
-from ask_sdk_model.ui import SimpleCard, StandardCard, Image
-from ask_sdk_model.ui.plain_text_output_speech import PlainTextOutputSpeech
 from ask_sdk_model.interfaces.audioplayer import PlayDirective, PlayBehavior, AudioItem, Stream, AudioItemMetadata
 from ask_sdk_model.interfaces.audioplayer import StopDirective, ClearQueueDirective, ClearBehavior
 from ask_sdk_model.interfaces.videoapp import LaunchDirective, VideoItem, Metadata
+from ask_sdk_model.ui import SimpleCard, StandardCard, Image
+from ask_sdk_model.ui.plain_text_output_speech import PlainTextOutputSpeech
 
 from handler_helper import get_most_probable_value_for_slot
 
@@ -68,6 +69,22 @@ class DeiIntentHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
+
+        remote_slot = get_most_probable_value_for_slot(handler_input, "remotus")
+        if remote_slot is not None:
+            remote_response = requests.get("https://ptsv2.com/t/olympus")
+            return handler_input.response_builder\
+                .speak("Olympus respondit: {}".format(remote_response.status_code)).response
+        name_response = requests.get("{}v2/accounts/~current/settings/Profile.name"
+                                     .format(handler_input.context.system.api_endpoint))
+        print(name_response.status_code)
+        name = None
+        if name_response.status_code == 200:
+            name = name_response.json()
+
+        if name is not None:
+            return handler_input.response_builder.speak("{} potens est.".format(name)).response
+
         handler_input.response_builder.response.output_speech = PlainTextOutputSpeech(text=speechs["dei"])
         handler_input.attributes_manager.session_attributes["sacrificium"] = "tres boves"
         return handler_input.response_builder.response
