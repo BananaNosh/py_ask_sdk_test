@@ -70,11 +70,13 @@ class DeiIntentHandler(AbstractRequestHandler):
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
 
-        remote_slot = get_most_probable_value_for_slot(handler_input, "remotus")
-        if remote_slot is not None:
+        is_remote = "remotus" in handler_input.attributes_manager.session_attributes
+        if is_remote:
             remote_response = requests.get("https://ptsv2.com/t/olympus")
             return handler_input.response_builder\
                 .speak("Olympus respondit: {}".format(remote_response.status_code)).response
+        # No clue why the following line is necessary (pycharm does not see that context has a system attribute)
+        # noinspection PyUnresolvedReferences
         name_response = requests.get("{}v2/accounts/~current/settings/Profile.name"
                                      .format(handler_input.context.system.api_endpoint))
         print(name_response.status_code)

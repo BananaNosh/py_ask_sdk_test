@@ -57,7 +57,7 @@ class AlexaTest:
 
             if item.session_attributes:
                 for k, v in item.session_attributes.items():
-                    item.request.attributes[k] = v
+                    item.request.session.attributes[k] = v
 
             context = item.request.context
             if item.user_access_token is not None:
@@ -107,7 +107,9 @@ def add_profile_mock(context: Context, profile_info: ProfileInfo):
                 return 200, {}, json.dumps(info_dict[profile_info_type])
         return 401, {}, json.dumps({})
 
+    # noinspection PyUnresolvedReferences
     responses.add_passthru('')
+    # noinspection PyUnresolvedReferences
     responses.add_callback(
         responses.GET,
         re.compile(r"{}v2/accounts/~current/settings"
