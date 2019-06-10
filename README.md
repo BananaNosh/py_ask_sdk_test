@@ -3,6 +3,9 @@
 This is a framework for testing **Alexa Skills** developed in **Python** with the [alexa-skills-kit-sdk-for-python](https://github.com/alexa/alexa-skills-kit-sdk-for-python), which is mostly a translation of taimos' [Alexa Skill Test Framework](https://github.com/taimos/ask-sdk-test) in **Typescript**, which itself is based on the [alexa-skill-test-framework](https://github.com/BrianMacIntosh/alexa-skill-test-framework) by Brian MacIntosh.
 
 The framework uses **assert** to check the expected behaviour. So the best way to go is using it with [pytest](https://docs.pytest.org/en/latest/index.html).
+
+The ask-sdk version it is based on is `ask-sdk-core=1.10`, `ask-sdk-runtime=1.10` and `ask-sdk-model=1.11`.
+
 ### Install:
 For the moment you have to clone the project and use it as a submodule in your project.
 ```bash
