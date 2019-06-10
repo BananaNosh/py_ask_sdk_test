@@ -1,10 +1,11 @@
-from alexa_test import AlexaTest
-from classes import TestItem, VideoItem
-from ask_sdk_model.interfaces.videoapp import Metadata
-from pseudo_handler import handler
-from request_builders.intent_request_builder import IntentRequestBuilder
-from test_config import skill_settings
 import pytest
+from ask_sdk_model.interfaces.videoapp import Metadata
+
+from pseudo_handler import handler
+from py_ask_sdk_test.alexa_test import AlexaTest
+from py_ask_sdk_test.classes import TestItem, VideoItem
+from py_ask_sdk_test.request_builders.intent_request_builder import IntentRequestBuilder
+from test_config import skill_settings
 
 
 def test_video_app_validator():

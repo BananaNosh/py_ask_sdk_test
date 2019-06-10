@@ -9,7 +9,7 @@ The ask-sdk version it is based on is `ask-sdk-core=1.10`, `ask-sdk-runtime=1.10
 ### Install:
 For the moment you have to clone the project and use it as a submodule in your project.
 ```bash
-cd <path/to/your/project>
+cd path/to/your/project
 git init # if your project is not a git repository so far
 git submodule add git@github.com:BananaNosh/py_ask_sdk_test.git py_ask_sdk_test
 ```
@@ -17,8 +17,8 @@ git submodule add git@github.com:BananaNosh/py_ask_sdk_test.git py_ask_sdk_test
 You can see an example for using the framework in the following and in the framework's [test-files](https://github.com/BananaNosh/py_ask_sdk_test/tree/master/tests):
 
 ```python
-from alexa_test import AlexaTest
-from classes import TestItem, SkillSettings, SupportedInterfaces
+from py_ask_sdk_test.alexa_test import AlexaTest
+from py_ask_sdk_test.classes import TestItem, SkillSettings, SupportedInterfaces
 from request_builders.launch_request_builder import LaunchRequestBuilder
 from request_builders.intent_request_builder import IntentRequestBuilder
 from pseudo_handler import handler

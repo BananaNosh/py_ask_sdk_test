@@ -1,6 +1,7 @@
-from intent_request_builder import IntentRequestBuilder
-from abstract_request_builder import SkillSettings, RequestEnvelope
 from ask_sdk_model.interfaces.audioplayer import PlayerActivity, AudioPlayerState
+
+from py_ask_sdk_test.request_builders.abstract_request_builder import SkillSettings, RequestEnvelope
+from py_ask_sdk_test.request_builders.intent_request_builder import IntentRequestBuilder
 
 
 class AudioPlayerResumeIntentRequestBuilder(IntentRequestBuilder):

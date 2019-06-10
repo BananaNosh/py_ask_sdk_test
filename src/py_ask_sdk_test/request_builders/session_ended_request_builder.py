@@ -1,6 +1,8 @@
-from abstract_request_builder import AbstractRequestBuilder, SkillSettings
-from ask_sdk_model import SessionEndedRequest, SessionEndedReason
 import datetime
+
+from ask_sdk_model import SessionEndedRequest, SessionEndedReason
+
+from py_ask_sdk_test.request_builders.abstract_request_builder import AbstractRequestBuilder, SkillSettings
 
 
 class SessionEndedRequestBuilder(AbstractRequestBuilder):

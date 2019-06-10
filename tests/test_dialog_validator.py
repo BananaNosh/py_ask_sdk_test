@@ -1,10 +1,10 @@
 import pytest
 
-from alexa_test import AlexaTest
-from classes import TestItem
+from py_ask_sdk_test.alexa_test import AlexaTest
+from py_ask_sdk_test.classes import TestItem
 from pseudo_handler import handler
-from request_builders.intent_request_builder import IntentRequestBuilder
-from request_builders.launch_request_builder import LaunchRequestBuilder
+from py_ask_sdk_test.request_builders.intent_request_builder import IntentRequestBuilder
+from py_ask_sdk_test.request_builders.launch_request_builder import LaunchRequestBuilder
 from test_config import skill_settings
 
 

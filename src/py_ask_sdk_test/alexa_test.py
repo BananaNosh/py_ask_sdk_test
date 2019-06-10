@@ -7,15 +7,15 @@ from ask_sdk_core.serialize import DefaultSerializer
 from ask_sdk_model import ResponseEnvelope
 from ask_sdk_model.context import Context
 
-from classes import TestItem, ProfileInfo
-from validators.audio_player_validator import AudioPlayerValidator
-from validators.card_validator import CardValidator
-from validators.dialog_validator import DialogValidator
-from validators.end_session_validator import EndSessionValidator
-from validators.question_mark_validator import QuestionMarkValidator
-from validators.session_attribute_validator import SessionAttributeValidator
-from validators.speech_validator import SpeechValidator
-from validators.video_app_validator import VideoAppValidator
+from py_ask_sdk_test.validators.audio_player_validator import AudioPlayerValidator
+from py_ask_sdk_test.validators.card_validator import CardValidator
+from py_ask_sdk_test.classes import ProfileInfo
+from py_ask_sdk_test.validators.dialog_validator import DialogValidator
+from py_ask_sdk_test.validators.end_session_validator import EndSessionValidator
+from py_ask_sdk_test.validators.question_mark_validator import QuestionMarkValidator
+from py_ask_sdk_test.validators.session_attribute_validator import SessionAttributeValidator
+from py_ask_sdk_test.validators.speech_validator import SpeechValidator
+from py_ask_sdk_test.validators.video_app_validator import VideoAppValidator
 
 
 class AlexaTest:

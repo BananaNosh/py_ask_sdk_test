@@ -1,4 +1,4 @@
-from classes import SkillSettings, SupportedInterfaces
+from py_ask_sdk_test.classes import SkillSettings, SupportedInterfaces
 
 skill_settings = SkillSettings(app_id="",
                                user_id="",

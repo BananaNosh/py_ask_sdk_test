@@ -1,7 +1,9 @@
-from abstract_request_builder import AbstractRequestBuilder
+import datetime
+
 from ask_sdk_model import IntentRequest, Intent, IntentConfirmationStatus, Slot, SlotConfirmationStatus
 from ask_sdk_model.slu.entityresolution import Resolutions, Resolution, ValueWrapper, Value, Status, StatusCode
-import datetime
+
+from py_ask_sdk_test.request_builders.abstract_request_builder import AbstractRequestBuilder
 
 
 class IntentRequestBuilder(AbstractRequestBuilder):

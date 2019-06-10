@@ -1,6 +1,6 @@
 from ask_sdk_model.dialog import ElicitSlotDirective, ConfirmSlotDirective, ConfirmIntentDirective
 
-from abstract_response_validator import AbstractResponseValidator
+from py_ask_sdk_test.validators.abstract_response_validator import AbstractResponseValidator
 
 
 class DialogValidator(AbstractResponseValidator):

@@ -5,7 +5,7 @@ from ask_sdk_model import RequestEnvelope, Session, Application, User, Context, 
 from ask_sdk_model.interfaces.audioplayer import AudioPlayerState, PlayerActivity
 from ask_sdk_model.interfaces.system import SystemState
 
-from classes import SkillSettings
+from py_ask_sdk_test.classes import SkillSettings
 
 
 class AbstractRequestBuilder(abc.ABC):

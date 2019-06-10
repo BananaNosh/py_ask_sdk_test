@@ -3,7 +3,7 @@ import re
 from ask_sdk_model.ui.simple_card import SimpleCard
 from ask_sdk_model.ui.standard_card import StandardCard
 
-from abstract_response_validator import AbstractResponseValidator
+from py_ask_sdk_test.validators.abstract_response_validator import AbstractResponseValidator
 
 
 class CardValidator(AbstractResponseValidator):

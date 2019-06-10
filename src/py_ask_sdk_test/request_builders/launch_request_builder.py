@@ -1,6 +1,8 @@
-from request_builders.abstract_request_builder import AbstractRequestBuilder
-from ask_sdk_model import LaunchRequest
 import datetime
+
+from ask_sdk_model import LaunchRequest
+
+from py_ask_sdk_test.request_builders.abstract_request_builder import AbstractRequestBuilder
 
 
 class LaunchRequestBuilder(AbstractRequestBuilder):

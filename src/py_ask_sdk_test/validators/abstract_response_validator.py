@@ -1,6 +1,8 @@
 import abc
-from classes import TestItem
+
 from ask_sdk_model import ResponseEnvelope
+
+from py_ask_sdk_test.classes import TestItem
 
 
 class AbstractResponseValidator(abc.ABC):

@@ -1,6 +1,6 @@
 from ask_sdk_model.interfaces.audioplayer import PlayDirective, StopDirective, ClearQueueDirective
 
-from abstract_response_validator import AbstractResponseValidator, TestItem, ResponseEnvelope
+from py_ask_sdk_test.validators.abstract_response_validator import AbstractResponseValidator, TestItem, ResponseEnvelope
 
 
 class AudioPlayerValidator(AbstractResponseValidator):

@@ -1,4 +1,4 @@
-from abstract_response_validator import AbstractResponseValidator, TestItem, ResponseEnvelope
+from py_ask_sdk_test.validators.abstract_response_validator import AbstractResponseValidator, TestItem, ResponseEnvelope
 
 
 class QuestionMarkValidator(AbstractResponseValidator):

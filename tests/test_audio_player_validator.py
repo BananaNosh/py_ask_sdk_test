@@ -1,11 +1,11 @@
 import pytest
 
-from alexa_test import AlexaTest
-from classes import TestItem, PlayStreamConfig, PlayBehavior, ClearBehavior, Stream
+from py_ask_sdk_test.alexa_test import AlexaTest
+from py_ask_sdk_test.classes import TestItem, PlayStreamConfig, PlayBehavior, ClearBehavior, Stream
 from pseudo_handler import handler
-from request_builders.audio_player_intent_request_builder import AudioPlayerPauseIntentRequestBuilder
-from request_builders.audio_player_intent_request_builder import AudioPlayerResumeIntentRequestBuilder
-from request_builders.intent_request_builder import IntentRequestBuilder
+from py_ask_sdk_test.request_builders.audio_player_intent_request_builder import AudioPlayerPauseIntentRequestBuilder
+from py_ask_sdk_test.request_builders.audio_player_intent_request_builder import AudioPlayerResumeIntentRequestBuilder
+from py_ask_sdk_test.request_builders.intent_request_builder import IntentRequestBuilder
 from test_config import skill_settings
 
 
