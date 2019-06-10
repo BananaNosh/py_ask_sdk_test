@@ -2,3 +2,4 @@ ask-sdk-core
 pytest
 coverage
 responses
+twine
