@@ -1,33 +1,31 @@
 import json
-import uuid
-import responses
 import re
+import uuid
 
+import responses
 from ask_sdk_core.serialize import DefaultSerializer
 from ask_sdk_model import ResponseEnvelope
 from ask_sdk_model.context import Context
 
-from classes import SkillSettings, TestItem, ProfileInfo
-from validators.speech_validator import SpeechValidator
+from classes import TestItem, ProfileInfo
+from validators.audio_player_validator import AudioPlayerValidator
+from validators.card_validator import CardValidator
+from validators.dialog_validator import DialogValidator
+from validators.end_session_validator import EndSessionValidator
 from validators.question_mark_validator import QuestionMarkValidator
 from validators.session_attribute_validator import SessionAttributeValidator
-from validators.end_session_validator import EndSessionValidator
-from validators.dialog_validator import DialogValidator
-from validators.card_validator import CardValidator
-from validators.audio_player_validator import AudioPlayerValidator
+from validators.speech_validator import SpeechValidator
 from validators.video_app_validator import VideoAppValidator
 
 
 class AlexaTest:
-    def __init__(self, handler, debug=False):
+    def __init__(self, handler):
         """
         Class for testing an alexa handler
         Args:
             handler(callable): the alexa handler
-            skill_settings(SkillSettings): the settings for the skill
         """
         self.handler = handler
-        self.debug = debug
         self.validators = [
             SpeechValidator(),
             SessionAttributeValidator(),
@@ -67,23 +65,10 @@ class AlexaTest:
                 handler = responses.activate(self.handler)
                 add_profile_mock(context, item.profile_info)
 
-            # TODO invokeFunction
-            # request_dict = item.request.to_dict() TODO: remove
-            # print(request_dict)
-            # request_json = json.dumps(request_dict)
-            # with open("test_events/generated.json", "w+") as f:
-            #     f.write(request_json)
-            # request_json = read("test_events/generated.json", loader=json.loads)
-            # print(request_json)
-            # request_json = request_to_json(item.request)
             response_dict = handler(request_to_dict(item.request), context)
             response = response_from_dict(response_dict)
-            if self.debug:
-                print(response)
             for validator in self.validators:
                 validator.validate(item, response)
-
-    # def _run_single_test(self, ):
 
 
 def request_to_dict(request):
