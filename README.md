@@ -7,11 +7,9 @@ The framework uses **assert** to check the expected behaviour. So the best way t
 The ask-sdk version it is based on is `ask-sdk-core=1.10`, `ask-sdk-runtime=1.10` and `ask-sdk-model=1.11`.
 
 ### Install:
-For the moment you have to clone the project and use it as a submodule in your project.
+You can install the framework via pip:
 ```bash
-cd path/to/your/project
-git init # if your project is not a git repository so far
-git submodule add git@github.com:BananaNosh/py_ask_sdk_test.git py_ask_sdk_test
+pip install py_ask_sdk_test
 ```
 ### Example:
 You can see an example for using the framework in the following and in the framework's [test-files](https://github.com/BananaNosh/py_ask_sdk_test/tree/master/tests):
