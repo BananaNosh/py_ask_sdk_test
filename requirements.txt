@@ -3,3 +3,4 @@ pytest
 coverage
 responses
 twine
+requests

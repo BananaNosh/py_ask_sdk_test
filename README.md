@@ -30,6 +30,7 @@ skill_settings = SkillSettings(app_id="<Your skill's id>",
 
 
 def test_launch_request():
+    """Tests the LaunchRequest's speech and repromt output"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [

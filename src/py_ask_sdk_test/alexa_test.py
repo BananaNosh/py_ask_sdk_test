@@ -7,9 +7,9 @@ from ask_sdk_core.serialize import DefaultSerializer
 from ask_sdk_model import ResponseEnvelope
 from ask_sdk_model.context import Context
 
+from py_ask_sdk_test.classes import TestItem, ProfileInfo
 from py_ask_sdk_test.validators.audio_player_validator import AudioPlayerValidator
 from py_ask_sdk_test.validators.card_validator import CardValidator
-from py_ask_sdk_test.classes import ProfileInfo
 from py_ask_sdk_test.validators.dialog_validator import DialogValidator
 from py_ask_sdk_test.validators.end_session_validator import EndSessionValidator
 from py_ask_sdk_test.validators.question_mark_validator import QuestionMarkValidator
@@ -65,23 +65,32 @@ class AlexaTest:
                 handler = responses.activate(self.handler)
                 add_profile_mock(context, item.profile_info)
 
-            response_dict = handler(request_to_dict(item.request), context)
+            response_dict = handler(DefaultSerializer().serialize(item.request), context)
             response = response_from_dict(response_dict)
             for validator in self.validators:
                 validator.validate(item, response)
 
 
-def request_to_dict(request):
-    return DefaultSerializer().serialize(request)
-
-
-def response_from_dict(response_dict):
+def response_from_dict(response_dict) -> ResponseEnvelope:
+    """
+    Deserialize a response dictionary to a Response object
+    Args:
+        response_dict(dict): The response dictionary
+    Returns: The deserialized response
+    """
     serializer = DefaultSerializer()
     response_json = json.dumps(serializer.serialize(response_dict))
     return serializer.deserialize(response_json, ResponseEnvelope)
 
 
-def add_profile_mock(context: Context, profile_info: ProfileInfo):
+def add_profile_mock(context, profile_info):
+    """
+    Adds http mock which returns to the http calls for amazon-profile-information with the given info from profil_info
+    Args:
+        context(Context): The skill's context
+        profile_info(ProfileInfo): The profil info
+
+    """
     def request_callback(request):
         profile_info_type = re.search(r"Profile\.(\w+)", request.path_url).group(1)
 

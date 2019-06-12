@@ -3,7 +3,6 @@ import logging
 from ask_sdk_core.handler_input import HandlerInput
 
 
-# TODO docstrings
 def get_slot_resolutions_from_handler(handler_input, slot_name):
     """
     Get the resolutions for the slot from the handler_input.

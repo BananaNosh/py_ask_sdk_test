@@ -9,6 +9,7 @@ from test_config import skill_settings
 
 
 def test_dialog_validator_elicit_slot():
+    """Tests the DialogValidator for a slot to be elicited"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
@@ -76,6 +77,7 @@ def test_dialog_validator_elicit_slot():
 
 
 def test_dialog_validator_elicit_intent():
+    """Tests the DialogValidator for an intent to be elicited"""
     alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(
@@ -99,6 +101,7 @@ def test_dialog_validator_elicit_intent():
 
 
 def test_dialog_validator_confirm_slot():
+    """Tests the DialogValidator for a slot to be confirmed"""
     alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(
@@ -132,6 +135,7 @@ def test_dialog_validator_confirm_slot():
 
 
 def test_dialog_validator_confirm_intent():
+    """Tests the DialogValidator for an intent to be confirmed"""
     alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(

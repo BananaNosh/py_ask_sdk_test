@@ -9,6 +9,7 @@ from test_config import skill_settings
 
 
 def test_video_app_validator():
+    """Tests the VideoAppValidator"""
     alexa_test = AlexaTest(handler)
     alexa_test.test([
         TestItem(IntentRequestBuilder("OrpheusIntent", skill_settings)

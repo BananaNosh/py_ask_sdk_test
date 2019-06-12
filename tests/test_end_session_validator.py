@@ -10,6 +10,7 @@ from test_config import skill_settings
 
 
 def test_end_session_validator_wrong():
+    """Tests the EndSessionValidator when it should alert"""
     alexa_test = AlexaTest(handler)
     with pytest.raises(AssertionError):
         alexa_test.test(
@@ -33,6 +34,7 @@ def test_end_session_validator_wrong():
 
 
 def test_end_session_validator_correct():
+    """Tests the EndSessionValidator when it should not alert"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [

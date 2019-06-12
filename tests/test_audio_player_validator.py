@@ -10,6 +10,7 @@ from test_config import skill_settings
 
 
 def test_audio_player_validator_play_directive():
+    """Tests the AudioPlayerValidator for a PlayDirective"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
@@ -68,6 +69,7 @@ def test_audio_player_validator_play_directive():
 
 
 def test_audio_player_validator_stop_directive():
+    """Tests the AudioPlayerValidator for a StopDirective"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
@@ -98,6 +100,7 @@ def test_audio_player_validator_stop_directive():
 
 
 def test_audio_player_validator_clear_queue_directive():
+    """Tests the AudioPlayerValidator for a ClearQueueDirective"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [

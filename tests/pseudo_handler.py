@@ -5,7 +5,6 @@ from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.utils import is_request_type, is_intent_name
-from ask_sdk_model import Response
 from ask_sdk_model.dialog import ElicitSlotDirective, ConfirmIntentDirective, ConfirmSlotDirective
 from ask_sdk_model.interfaces.audioplayer import PlayDirective, PlayBehavior, AudioItem, Stream, AudioItemMetadata
 from ask_sdk_model.interfaces.audioplayer import StopDirective, ClearQueueDirective, ClearBehavior
@@ -37,38 +36,71 @@ images = {
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
-    """Handler for Skill Launch."""
+    """Handles the LaunchRequest"""
 
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+
+        Returns: (bool) If this handler can handle the input
+
+        """
         return is_request_type("LaunchRequest")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
 
         handler_input.response_builder.speak(speechs["launch"]).ask(speechs["launch_repromt"])
         return handler_input.response_builder.response
 
 
 class TaceIntentHandler(AbstractRequestHandler):
+    """Handles the TaceIntent"""
+
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (bool) If this handler can handle the input
+        """
         return is_intent_name("TaceIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
         handler_input.response_builder.speak(None).ask(reprompt=None) \
             .add_directive(ClearQueueDirective(ClearBehavior.CLEAR_ALL))
         return handler_input.response_builder.response
 
 
 class DeiIntentHandler(AbstractRequestHandler):
+    """Handles the DeiIntent"""
+
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (bool) If this handler can handle the input
+        """
         return is_intent_name("DeiIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
 
         is_remote = "remotus" in handler_input.attributes_manager.session_attributes
         if is_remote:
@@ -92,12 +124,27 @@ class DeiIntentHandler(AbstractRequestHandler):
 
 
 class CatullIntentHandler(AbstractRequestHandler):
+    """Handles the CatullIntent"""
+
+    """Handles the CatullIntent"""
+
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+
+        Returns: (bool) If this handler can handle the input
+
+        """
         return is_intent_name("CatullIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
         handler_input.response_builder \
             .speak(speechs["catull"]) \
             .ask(speechs["catull_repromt"]) \
@@ -106,12 +153,23 @@ class CatullIntentHandler(AbstractRequestHandler):
 
 
 class NeroIntentHandler(AbstractRequestHandler):
+    """Handles the NeroIntent"""
+
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (bool) If this handler can handle the input
+        """
         return is_intent_name("NeroIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
         handler_input.response_builder.speak(speechs["nero"]) \
             .add_directive(ConfirmIntentDirective()) \
             .set_card(StandardCard("Nero", speechs["nero_card"],
@@ -120,12 +178,23 @@ class NeroIntentHandler(AbstractRequestHandler):
 
 
 class VarusIntentHandler(AbstractRequestHandler):
+    """Handles the VarusIntent"""
+
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (bool) If this handler can handle the input
+        """
         return is_intent_name("VarusIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
         slot_value = get_most_probable_value_for_slot(handler_input, "legiones")
         if slot_value is None:
             return handler_input.response_builder.add_directive(ElicitSlotDirective(slot_to_elicit="legiones")).response
@@ -144,12 +213,23 @@ class VarusIntentHandler(AbstractRequestHandler):
 
 
 class OrpheusIntentHandler(AbstractRequestHandler):
+    """Handles the OrpheusIntent"""
+
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (bool) If this handler can handle the input
+        """
         return is_intent_name("OrpheusIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
         pellicula_slot = get_most_probable_value_for_slot(handler_input, "pellicula")
         if pellicula_slot is None:
             handler_input.response_builder.add_directive(
@@ -163,12 +243,23 @@ class OrpheusIntentHandler(AbstractRequestHandler):
 
 
 class ResumeIntentHandler(AbstractRequestHandler):
+    """Handles the ResumeIntent"""
+
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (bool) If this handler can handle the input
+        """
         return is_intent_name("AMAZON.ResumeIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
         handler_input.response_builder.add_directive(
             PlayDirective(PlayBehavior.REPLACE_ALL,
                           AudioItem(Stream(token="lyra_token", url="https://"), AudioItemMetadata("Highway to hell"))))
@@ -176,25 +267,45 @@ class ResumeIntentHandler(AbstractRequestHandler):
 
 
 class PauseIntentHandler(AbstractRequestHandler):
+    """Handles the PauseIntent"""
+
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (bool) If this handler can handle the input
+        """
         return is_intent_name("AMAZON.PauseIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
         handler_input.response_builder.add_directive(StopDirective())
         return handler_input.response_builder.response
 
 
-class SessionEndedRequestHandler(AbstractRequestHandler):  # TODO docstrings
-    """Handler for skill session end."""
+class SessionEndedRequestHandler(AbstractRequestHandler):
+    """Handles the session end of the skill"""
 
     def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
+        """
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (bool) If this handler can handle the input
+        """
         return is_request_type("SessionEndedRequest")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
+        """
+        Creates a response for the given input
+        Args:
+            handler_input(HandlerInput): The input to the handler
+        Returns: (Response) The response
+        """
         return handler_input.response_builder.response
 
 
@@ -207,11 +318,6 @@ sb.add_request_handler(VarusIntentHandler())
 sb.add_request_handler(OrpheusIntentHandler())
 sb.add_request_handler(ResumeIntentHandler())
 sb.add_request_handler(PauseIntentHandler())
-# sb.add_request_handler(HelpIntentHandler())
-# sb.add_request_handler(CancelOrStopIntentHandler())
-# sb.add_request_handler(FallbackIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
-
-# sb.add_exception_handler(CatchAllExceptionHandler())
 
 handler = sb.lambda_handler()

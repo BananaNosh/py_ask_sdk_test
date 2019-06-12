@@ -8,6 +8,7 @@ from test_config import skill_settings
 
 
 def test_session_attribute_validator():
+    """Tests the SessionAttributeValidator"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [

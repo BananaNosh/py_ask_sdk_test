@@ -9,6 +9,7 @@ from test_config import skill_settings
 
 
 def test_speech_validator_wrong_speech():
+    """Tests the SpeechValidator with wrong speech"""
     alexa_test = AlexaTest(handler)
     with pytest.raises(AssertionError):
         alexa_test.test(
@@ -24,6 +25,7 @@ def test_speech_validator_wrong_speech():
 
 
 def test_speech_validator_wrong_reprompt():
+    """Tests the SpeechValidator with wrong repromt"""
     alexa_test = AlexaTest(handler)
     with pytest.raises(AssertionError):
         alexa_test.test(
@@ -39,6 +41,7 @@ def test_speech_validator_wrong_reprompt():
 
 
 def test_speech_validator_no_repromt():
+    """Tests the SpeechValidator expecting a None reprompt"""
     alexa_test = AlexaTest(handler)
     with pytest.raises(AssertionError):
         alexa_test.test(
@@ -54,6 +57,7 @@ def test_speech_validator_no_repromt():
 
 
 def test_speech_validator_correct():
+    """Tests the SpeechValidator with correct speech and repromt"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
@@ -68,6 +72,7 @@ def test_speech_validator_correct():
 
 
 def test_speech_validator_no_speech():
+    """Tests the SpeechValidator expecting an empty speech"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
@@ -93,6 +98,7 @@ def test_speech_validator_no_speech():
 
 
 def test_speech_validator_regex_matched():
+    """Tests the SpeechValidator using regex"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
@@ -107,6 +113,7 @@ def test_speech_validator_regex_matched():
 
 
 def test_speech_validator_regex_no_match():
+    """Tests the SpeechValidator using regex when it should alert"""
     alexa_test = AlexaTest(handler)
     with pytest.raises(AssertionError):
         alexa_test.test(
@@ -122,6 +129,7 @@ def test_speech_validator_regex_no_match():
 
 
 def test_speech_validator_plain_text():
+    """Tests the SpeechValidator for a Plain Text response"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [

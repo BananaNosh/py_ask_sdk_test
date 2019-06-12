@@ -8,6 +8,7 @@ from test_config import skill_settings
 
 
 def test_card_validator():
+    """Tests the CardValidator"""
     alexa_test = AlexaTest(handler)
     alexa_test.test(
         [
