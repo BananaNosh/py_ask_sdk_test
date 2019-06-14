@@ -52,14 +52,14 @@ class IntentRequestBuilder(AbstractRequestBuilder):
             self.slots[slot_name] = Slot(slot_name, value, SlotConfirmationStatus.NONE)
         return self
 
-    def with_slot_with_resolution(self, slot_name, value, slot_type, slot_id):
+    def with_slot_with_resolution(self, slot_name, value, slot_type, slot_value_id):
         """
         Add a slot with its resolution to the intent
         Args:
             slot_name(str): the name of the slot
-            value(Any): the value to be added
+            value(Any): the resolved value to be added
             slot_type(str): the name of the slot_type
-            slot_id(str): the slot's id
+            slot_value_id(str): the id of the resolved value
         Returns: (IntentRequestBuilder) self
         """
         self.with_slot(slot_name, value)
@@ -68,7 +68,7 @@ class IntentRequestBuilder(AbstractRequestBuilder):
         if self.slots[slot_name].resolutions:
             for res in self.slots[slot_name].resolutions.resolutions_per_authority:
                 if res.authority == authority:
-                    res.values.append(ValueWrapper(Value(slot_name, slot_id)))
+                    res.values.append(ValueWrapper(Value(value, slot_value_id)))
                     value_added = True
                     break
 
@@ -80,7 +80,7 @@ class IntentRequestBuilder(AbstractRequestBuilder):
                 .append(Resolution(authority=authority,
                                    status=Status(StatusCode.ER_SUCCESS_MATCH),
                                    values=[
-                                       ValueWrapper(Value(slot_name, slot_id))
+                                       ValueWrapper(Value(value, slot_value_id))
                                    ]))
         return self
 
