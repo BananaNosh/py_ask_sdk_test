@@ -50,7 +50,7 @@ class AlexaTest:
         session_id = test_items[0].request.session.session_id.format(uuid.uuid4())
         for i, item in enumerate(test_items):
             item.request.session.new = i == 0
-            item.request.attributes = session_attributes
+            item.request.session.attributes = session_attributes
             item.request.session.session_id = session_id
 
             if item.session_attributes:
@@ -69,6 +69,7 @@ class AlexaTest:
             response = response_from_dict(response_dict)
             for validator in self.validators:
                 validator.validate(item, response)
+            session_attributes = response.session_attributes
 
 
 def response_from_dict(response_dict) -> ResponseEnvelope:
