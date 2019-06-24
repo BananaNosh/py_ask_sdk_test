@@ -61,7 +61,3 @@ def test_end_session_validator_correct():
             )
         ]
     )
-
-
-def test_end_session_validator_with_directive():
-    pass  # TODO
