@@ -3,7 +3,7 @@ from setuptools import find_packages
 
 setup(
     name='py_ask_sdk_test',
-    version='1.2',
+    version='1.3',
     license='MIT',
     description='A framework for testing Alexa Skills developed in Python with the alexa-skills-kit-sdk-for-python.',
     long_description=open('README.md').read(),
@@ -13,7 +13,7 @@ setup(
     url='https://github.com/BananaNosh/py_ask_sdk_test',
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    download_url='https://github.com/BananaNosh/py_ask_sdk_test/archive/v1.2.tar.gz',
+    download_url='https://github.com/BananaNosh/py_ask_sdk_test/archive/v1.3.tar.gz',
     keywords=['alexa', 'skill', 'alexa skill', 'test', 'testing', 'framework',
               'testing framework', 'ask_sdk', 'python', 'pytest'],
     install_requires=[
