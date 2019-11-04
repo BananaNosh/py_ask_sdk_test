@@ -35,24 +35,27 @@ class IntentRequestBuilder(AbstractRequestBuilder):
             slot_name(str): the name of the slot
         Returns: (IntentRequestBuilder) self
         """
-        return self.with_slot(slot_name, None)
+        return self.with_slot(slot_name, None, SlotConfirmationStatus.NONE)
 
-    def with_slot(self, slot_name, value):
+    def with_slot(self, slot_name, value, confirmation_status=SlotConfirmationStatus.NONE):
         """
         Add a slot with a value to the intent
         Args:
             slot_name(str): the name of the slot
             value(Any): the value to be added
+            confirmation_status(SlotConfirmationStatus): the confirmation status of the slot
         Returns: (IntentRequestBuilder) self
 
         """
         if slot_name in self.slots:
             self.slots[slot_name].value = value
+            self.slots[slot_name].confirmation_status = confirmation_status
         else:
-            self.slots[slot_name] = Slot(slot_name, value, SlotConfirmationStatus.NONE)
+            self.slots[slot_name] = Slot(slot_name, value, confirmation_status)
         return self
 
-    def with_slot_with_resolution(self, slot_name, value, slot_type, slot_value_id):
+    def with_slot_with_resolution(self, slot_name, value, slot_type, slot_value_id,
+                                  confirmation_status=SlotConfirmationStatus.NONE):
         """
         Add a slot with its resolution to the intent
         Args:
@@ -60,9 +63,10 @@ class IntentRequestBuilder(AbstractRequestBuilder):
             value(Any): the resolved value to be added
             slot_type(str): the name of the slot_type
             slot_value_id(str): the id of the resolved value
+            confirmation_status(SlotConfirmationStatus): the confirmation status of the slot
         Returns: (IntentRequestBuilder) self
         """
-        self.with_slot(slot_name, value)
+        self.with_slot(slot_name, value, confirmation_status)
         authority = "amzn1.er-authority.echo-sdk.{}.{}".format(self.skill_settings.app_id, slot_type)
         value_added = False
         if self.slots[slot_name].resolutions:
@@ -76,7 +80,7 @@ class IntentRequestBuilder(AbstractRequestBuilder):
             self.slots[slot_name].resolutions = Resolutions([])
 
         if not value_added:
-            self.slots[slot_name].resolutions.resolutions_per_authority\
+            self.slots[slot_name].resolutions.resolutions_per_authority \
                 .append(Resolution(authority=authority,
                                    status=Status(StatusCode.ER_SUCCESS_MATCH),
                                    values=[
@@ -84,17 +88,19 @@ class IntentRequestBuilder(AbstractRequestBuilder):
                                    ]))
         return self
 
-    def with_slot_with_resolution_no_match(self, slot_name, value, slot_type):
+    def with_slot_with_resolution_no_match(self, slot_name, value, slot_type,
+                                           confirmation_status=SlotConfirmationStatus.NONE):
         """
         Add a slot with a resolution without match to the intent
         Args:
             slot_name(str): the name of the slot
             value(Any): the value to be added
             slot_type(str): the name of the slot_type
+            confirmation_status(SlotConfirmationStatus): the confirmation status of the slot
         Returns: (IntentRequestBuilder) self
         """
         # noinspection PyTypeChecker
-        self.with_slot_with_resolution(slot_name, value, slot_type, None)
+        self.with_slot_with_resolution(slot_name, value, slot_type, None, confirmation_status)
         last_added_resolution = self.slots[slot_name].resolutions.resolutions_per_authority[-1]
         last_added_resolution.status = Status(StatusCode.ER_SUCCESS_NO_MATCH)
         last_added_resolution.values = []
